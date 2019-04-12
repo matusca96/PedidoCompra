@@ -1,0 +1,145 @@
+<core:FragmentDefinition
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:t="sap.ui.table"
+	xmlns:f="sap.ui.layout.form">
+	<VBox class="sapUiSmallMargin">
+		<Panel headerText="Pedido de compra" class="sapUiNoContentPadding">
+			<f:SimpleForm id="formPedido"
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="4"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="3"
+				columnsL="2"
+				columnsM="2"
+				singleContainerFullSize="false">
+				<f:content>
+					<core:Title text="Dados do Pedido"/>
+					<Label text="Nº do pedido" labelFor="pedido" design="Bold"/>
+					<Input id="pedido" value="{pedido>/Numero}" required="true" editable="{view>/codigoEdit}"/>
+					
+					<Label text="Parceiro Negócio" labelFor="cliente" design="Bold"/>
+					<Input selectedKey="{
+								path: 'pedido>/Cliente',
+								type: 'sap.ui.model.odata.type.Int32'
+							}"
+						required="true"
+						textFormatMode="KeyValue"
+						showSuggestion="true"
+						showValueHelp="true"
+						valueHelpRequest="handleSearchParceiro"
+						suggestionItems="{
+							path: '/ParceiroNegocios',
+							events: {
+								dataReceveid: '.parceiroNegocioReceived'
+							}
+						}"
+						id="cliente">
+						<suggestionItems>
+							<core:ListItem key="{Id}" text="{RazaoSocial}"/>
+						</suggestionItems>
+					</Input>
+					
+					<Label text="Emissão" labelFor="data" required="true" design="Bold"/>
+					<DatePicker id="data" dateValue="{pedido>/Emissao}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
+					
+					<core:Title/>
+					<Label text="Observações" labelFor="obs"/>
+					<TextArea id="obs" value="{pedido>/Observacoes}" rows="5" maxLength="254"/>
+				</f:content>
+			</f:SimpleForm>
+			<t:Table id="tablePedido"
+				rows="{itens>/}"
+				class="sapUiSizeCondensed"
+				selectionMode="Single"
+				selectionBehavior="Row"
+				enableSelectAll="false"
+				editable="true"
+				visibleRowCountMode="Auto"
+				enableBusyIndicator="true"
+				alternateRowColors="true"
+				enableCustomFilter="false">
+				<t:toolbar>
+					<Toolbar>
+						<Title text="Inserir item ao pedido"/>
+						<ToolbarSpacer/>
+						<Button id="inserir" icon="sap-icon://add" press="onInserirLinha"/>
+						<Button id="remover" icon="sap-icon://delete" press="onRemoverLinha"/>
+					</Toolbar>
+				</t:toolbar>
+				<t:columns>
+					<t:Column>
+						<Label text="Produto"/>
+						<t:template>
+							<Input selectedKey="{
+									path: 'itens>Produto',
+									type: 'sap.ui.model.odata.type.Int32'
+								}"
+								textFormatMode="KeyValue"
+								showSuggestion="true"
+								showValueHelp="true"
+								valueHelpRequest="handleSearchProduto"
+								suggestionItems="{
+									path: '/Produtos',
+									templateShareable: true
+								}"
+								id="produto">
+								<suggestionItems>
+									<core:ListItem key="{Id}" text="{Descricao}"/>
+								</suggestionItems>
+							</Input>
+						</t:template>
+					</t:Column>
+					<t:Column>
+						<Label text="Quantidade"/>
+						<t:template>
+							<Input value="{
+								path: 'itens>Quantidade',
+								type: 'sap.ui.model.odata.type.Single',
+								formatOptions: {
+									decimalSeparator: ',',
+									decimals: 8
+								}
+								}" change="onCalculaTotal"/>
+						</t:template>
+					</t:Column>
+					<t:Column>
+						<Label text="Valor"/>
+						<t:template>
+							<Input value="{ 
+								path: 'itens>ValorUnitario',
+								type: 'sap.ui.model.odata.type.Single',
+								formatOptions: {
+									decimalSeparator: ',',
+									decimals: 8
+								}
+							}" description="R$" change="onCalculaTotal"/>
+						</t:template>
+					</t:Column>
+					<t:Column>
+						<Label text="Total"/>
+						<t:template>
+							<Text text="{
+									path: 'itens>Total',
+									type: 'sap.ui.model.odata.type.Single',
+									formatOptions: {
+										decimalSeparator: ',',
+										decimals: 8
+									}
+								}" />
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+	</VBox>
+</core:FragmentDefinition>

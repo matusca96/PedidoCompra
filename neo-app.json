@@ -1,0 +1,34 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources",
+        "version": "1.52.13"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources",
+        "version": "1.52.13"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/siagro",
+      "target": {
+        "type": "destination",
+        "name": "siagro"
+      },
+      "description": "siagro odata service"
+    }
+  ],
+  "sendWelcomeFileRedirect": true
+}

@@ -1,0 +1,17 @@
+<mvc:View xmlns:core="sap.ui.core"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+controllerName="br.com.idxtecPedidoCompra.controller.PedidoCompraEdit"
+xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="Pedido de compra" id="pagePedido" showHeader="false">
+		<content>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Salvar" icon="sap-icon://save" press="salvar"/>
+				<Button text="Fechar" icon="sap-icon://close-command-field" press="fechar"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
