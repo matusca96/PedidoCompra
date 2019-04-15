@@ -7,84 +7,81 @@
 	height="100%">
 	<App id="app">
 		<pages>
-			<Page title="Title" showHeader="false">
+			<Page showHeader="false" class="sapUiContentPadding" enableScrolling="false">
 				<content>
-					<VBox class="sapUiSmallMargin">
-						<Panel headerText="Pedido de compra">
-							<t:Table id="tablePedidos"
-								rows="{ 
-									path: '/PedidoVendas',
-									parameters: {
-										expand: 'ParceiroNegocioDetails'
-									}
-								}"
-								class="sapUiSizeCondensed"
-								selectionMode="Single"
-								selectionBehavior="Row"
-								enableSelectAll="false"
-								editable="true"
-								visibleRowCountMode="Auto"
-								enableBusyIndicator="true"
-								alternateRowColors="true"
-								enableCustomFilter="false">
-								<t:toolbar>
-									<Toolbar>
-										<Title text="Lista de Pedidos"/>
-										<ToolbarSpacer/>
-									</Toolbar>
-								</t:toolbar>
-								<t:columns>
-									<t:Column filterProperty="Numero" sortProperty="Numero">
-										<Label text="Pedido"/>
-										<t:template>
-											<Text wrapping="false" text="{Numero}"/>
-										</t:template>
-									</t:Column>
-									<t:Column filterProperty="Emissao" sortProperty="Emissao" defaultFilterOperator="EQ">
-										<Label text="Emissão"/>
-										<t:template>
-											<Text wrapping="false" text="{
-												path: 'Emissao',
-												type: 'sap.ui.model.type.Date',
-												formatOptions:{
-													style:'short',
-													pattern: 'dd.MM.yyyy'
-												}
-											}"/>
-										</t:template>
-									</t:Column>
-									<t:Column filterProperty="ParceiroNegocioDetails/RazaoSocial" 
-											  sortProperty="ParceiroNegocioDetails/RazaoSocial">
-										<Label text="Razão Social"/>
-										<t:template>
-											<Text wrapping="false" text="{ParceiroNegocioDetails/RazaoSocial}"/>
-										</t:template>
-									</t:Column>
-									<t:Column >
-										<Label text="Parceiro ID"/>
-										<t:template>
-											<Text wrapping="false" text="{ParceiroNegocioDetails/Id}"/>
-										</t:template>
-									</t:Column>
-								</t:columns>
-								<t:footer>
-									<Toolbar>
-										<Button icon="sap-icon://refresh" press="onAtualizarLista"/>
-										<ToolbarSpacer/>
-										<Button icon="sap-icon://filter"/>
-										<Button icon="sap-icon://clear-filter"/>
-									</Toolbar>
-								</t:footer>
-							</t:Table>	
-						</Panel>
-					</VBox>
+					<t:Table id="tablePedidos"
+						rows="{ 
+							path: '/PedidoVendas',
+							sorter: {
+								path: 'Numero'
+							},
+							parameters: {
+								expand: 'ParceiroNegocioDetails'
+							}
+						}"
+						selectionMode="Single"
+						selectionBehavior="Row"
+						class="sapUiSizeCondensed"
+						visibleRowCountMode="Auto"
+						enableBusyIndicator="true"
+						alternateRowColors="true">
+						<t:toolbar>
+							<Toolbar>
+								<Title text="Lista de Pedidos"/>
+								<ToolbarSpacer/>
+								<SearchField placeholder="Pesquisar pedido..." width="30%" search="filtraPedido"/>
+							</Toolbar>
+						</t:toolbar>
+						<t:columns>
+							<t:Column id="columnEmpresa" filtered="true" width="10%" >
+								<Label text="Empresa" wrapping="true"/>
+								<t:template>
+									<Text text="{Empresa}" wrapping="false"/>
+								</t:template>
+							</t:Column>
+							<t:Column id="columnNumero" filterProperty="Numero" sortProperty="Numero">
+								<Label text="Pedido"/>
+								<t:template>
+									<Text wrapping="false" text="{Numero}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="Emissao" sortProperty="Emissao" defaultFilterOperator="EQ">
+								<Label text="Emissão"/>
+								<t:template>
+									<Text wrapping="false" text="{
+										path: 'Emissao',
+										type: 'sap.ui.model.type.Date',
+										formatOptions:{
+											style:'short',
+											pattern: 'dd.MM.yyyy'
+										}
+									}"/>
+								</t:template>
+							</t:Column>
+							<t:Column filterProperty="ParceiroNegocioDetails/RazaoSocial" 
+									  sortProperty="ParceiroNegocioDetails/RazaoSocial">
+								<Label text="Razão Social"/>
+								<t:template>
+									<Text wrapping="false" text="{ParceiroNegocioDetails/RazaoSocial}"/>
+								</t:template>
+							</t:Column>
+							<t:Column >
+								<Label text="Parceiro ID"/>
+								<t:template>
+									<Text wrapping="false" text="{ParceiroNegocioDetails/Id}"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
 				</content>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" text="Incluir Novo" press="onIncluirPedido"/>
-						<Button icon="sap-icon://edit" text="Editar" press="onEditarPedido"/>
-						<Button icon="sap-icon://delete" text="Excluir"/>
+						<Button id="incluir" text="Incluir novo" press="onIncluir" type="Emphasized"/>
+						<Button id="editar" text="Editar" press="onEditar"/>
+						<Button id="remover" text="Remover" press="onRemover"/>
+						<ToolbarSeparator/>
+						<Button icon="sap-icon://refresh" press="onRefresh"/>
 					</Toolbar>
 				</footer>
 			</Page>

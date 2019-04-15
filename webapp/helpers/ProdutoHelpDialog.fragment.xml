@@ -3,9 +3,8 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		title="Produtos"
-		class="sapUiPopupWithPadding"
-		items="{path: '/Produtos',
-			templateShareable: false}"
+		class="sapUiPopupWithPadding sapUiSizeCompact"
+		items="{path: '/Produtos', sorter: {path: 'Descricao'}}"
 		search="_handleProdutoValueHelpSearch"
 		confirm="_handleProdutoValueHelpClose"
 		cancel="_handleProdutoValueHelpClose">

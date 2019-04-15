@@ -2,8 +2,8 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"sap/ui/model/json/JSONModel",
-	"br/com/idxtecPedidoCompra/controller/ParceiroNegocioHelpDialog",
-	"br/com/idxtecPedidoCompra/controller/ProdutoHelpDialog",
+	"br/com/idxtecPedidoCompra/helpers/ParceiroNegocioHelpDialog",
+	"br/com/idxtecPedidoCompra/helpers/ProdutoHelpDialog",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/core/routing/History"
 ], function(Controller, MessageBox, JSONModel, ParceiroNegocioHelpDialog, ProdutoHelpDialog, FilterOperator, History) {

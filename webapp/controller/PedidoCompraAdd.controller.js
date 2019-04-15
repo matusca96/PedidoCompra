@@ -2,17 +2,17 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"sap/ui/model/json/JSONModel",
-	"br/com/idxtecPedidoCompra/controller/ParceiroNegocioHelpDialog",
-	"br/com/idxtecPedidoCompra/controller/ProdutoHelpDialog",
-	"sap/ui/core/routing/History"
-], function(Controller, MessageBox, JSONModel, ParceiroNegocioHelpDialog, ProdutoHelpDialog, History) {
+	"br/com/idxtecPedidoCompra/helpers/ParceiroNegocioHelpDialog",
+	"br/com/idxtecPedidoCompra/helpers/ProdutoHelpDialog",
+	"sap/ui/core/routing/History",
+	"br/com/idxtecPedidoCompra/services/Session"
+], function(Controller, MessageBox, JSONModel, ParceiroNegocioHelpDialog, ProdutoHelpDialog, History, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecPedidoCompra.controller.PedidoCompraAdd", {
 		onInit: function(){
 			var oRouter = this.getOwnerComponent().getRouter();
-			
-			
+
 			oRouter.getRoute("pedidoAdd").attachMatched(this._routerMatch, this);
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 			
@@ -33,12 +33,12 @@ sap.ui.define([
 		
 		handleSearchParceiro: function(oEvent){
 			var sInputId = oEvent.getParameter("id");
-			ParceiroNegocioHelpDialog.handleValueHelp(this.getView(), sInputId);
+			ParceiroNegocioHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		handleSearchProduto: function(oEvent){
 			var sInputId = oEvent.getParameter("id");
-			ProdutoHelpDialog.handleValueHelp(this.getView(), sInputId);
+			ProdutoHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		_routerMatch: function() {
@@ -48,7 +48,11 @@ sap.ui.define([
 				Numero: "00000000",
 				Cliente: 0,
 				Emissao: new Date(),
-				Observacoes: ""
+				Observacoes: "",
+				"Empresa" : Session.get("EMPRESA_ID"),
+				"Usuario": Session.get("USUARIO_ID"),
+				"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+				"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 			};
 			
 			oPedidoModel.setData(oPedido);
@@ -70,7 +74,11 @@ sap.ui.define([
 				Produto: 0,
 				Quantidade: 1,
 				ValorUnitario: 0,
-				Total: 0
+				Total: 0,
+				"Empresa" : Session.get("EMPRESA_ID"),
+				"Usuario": Session.get("USUARIO_ID"),
+				"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+				"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 	    	});
 			this.getView().getModel("itens").setProperty("/", oNovoItem);
 			

@@ -6,11 +6,13 @@ sap.ui.define([
 	
 	return {
 		
-		handleValueHelp: function(oView, sInputId) {
+		handleValueHelp: function(oView, sInputId, oController) {
 			this._oView = oView;
 			this._sInputId = sInputId;
 			
-			var sFrag = "br.com.idxtecPedidoCompra.view.ParceiroNegocioHelpDialog"; 
+			oController.getOwnerComponent().getModel().refresh(true);
+			
+			var sFrag = "br.com.idxtecPedidoCompra.helpers.ParceiroNegocioHelpDialog"; 
 			// create value help dialog
 			if (!this._valueHelpDialog) {
 				this._valueHelpDialog = sap.ui.xmlfragment(sFrag,this);
@@ -39,6 +41,8 @@ sap.ui.define([
 				oInput.setSelectedKey(sId);
 			}
 			evt.getSource().getBinding("items").filter([]);
+			
+			this._valueHelpDialog = undefined;
 		}
 	};
 });

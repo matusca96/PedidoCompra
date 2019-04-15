@@ -9,8 +9,8 @@ xmlns:html="http://www.w3.org/1999/xhtml">
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button text="Salvar" icon="sap-icon://save" press="salvar"/>
-				<Button text="Fechar" icon="sap-icon://close-command-field" press="fechar"/>
+				<Button text="Salvar" press="salvar" type="Accept"/>
+   				<Button text="Fechar" press="fechar" type="Reject"/>
 			</Toolbar>
 		</footer>
 	</Page>
