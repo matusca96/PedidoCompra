@@ -1,17 +1,39 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<SelectDialog
+	<TableSelectDialog
 		title="Produtos"
 		class="sapUiPopupWithPadding sapUiSizeCompact"
-		items="{path: '/Produtos', sorter: {path: 'Descricao'}}"
-		search="_handleProdutoValueHelpSearch"
-		confirm="_handleProdutoValueHelpClose"
-		cancel="_handleProdutoValueHelpClose">
-		<StandardListItem
-			iconDensityAware="false"
-			iconInset="false"
-			title="{Descricao}"
-			description="{Id}" />
-	</SelectDialog>
+		items="{path: '/Produtos', sorter: {path: 'Descricao'}, parameters: {expand: 'UnidadeMedidaDetails'}}"
+		search="_handleValueHelpSearch"
+		confirm="_handleValueHelpClose"
+		cancel="_handleValueHelpClose">
+		<ColumnListItem>
+			<cells>
+				<ObjectNumber
+					number="{Id}"/>
+				<ObjectIdentifier
+					title="{Descricao}"/>
+				<ObjectIdentifier
+					title="{UnidadeMedidaDetails/Descricao}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="6em">
+				<header>
+					<Text text="ID"/>
+				</header>
+			</Column>
+			<Column width="20em">
+				<header>
+					<Text text="Descrição"/>
+				</header>
+			</Column>
+			<Column width="10em">
+				<header>
+					<Text text="Unidade de Medida"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
 </core:FragmentDefinition>

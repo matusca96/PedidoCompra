@@ -8,17 +8,16 @@ sap.ui.define([
 		
 		handleValueHelp: function(oView, sInputId, oController) {
 			this._oView = oView;
-			this._sInputId = sInputId;
+			this._inputId = sInputId;
 			
 			oController.getOwnerComponent().getModel().refresh(true);
-			
+
 			var sFrag = "br.com.idxtecPedidoCompra.helpers.ParceiroNegocioHelpDialog"; 
-			// create value help dialog
 			if (!this._valueHelpDialog) {
 				this._valueHelpDialog = sap.ui.xmlfragment(sFrag,this);
 				this._oView.addDependent(this._valueHelpDialog);
 			}
-			
+							
 			this._valueHelpDialog.open();
 		},
 		
@@ -35,8 +34,10 @@ sap.ui.define([
 		_handleValueHelpClose : function (evt) {
 			var oSelectedItem = evt.getParameter("selectedItem");
 			if (oSelectedItem) {
-				var oInput = sap.ui.getCore().byId(this._sInputId);
-				var sId = oSelectedItem.getDescription();
+				var oInput = this._oView.byId(this._inputId);
+				var oCells = oSelectedItem.getCells();
+				
+				var sId = oCells[0].getNumber();
 
 				oInput.setSelectedKey(sId);
 			}

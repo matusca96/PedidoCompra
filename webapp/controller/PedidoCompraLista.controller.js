@@ -15,15 +15,20 @@ sap.ui.define([
                 source: { pattern: "yyyy-MM-dd" },  pattern: "dd.MM.yyyy", style: "full"
             }));
             
-            this.getModel().attachMetadataLoaded(function(){
-				var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+            var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
 				var oView = this.getView();
 				var oTable = oView.byId("tablePedidos");
-				var oColumn = oView.byId("columnNumero");
-				
-				oTable.sort(oColumn);
-				oView.byId("tablePedidos").getBinding("rows").filter(oFilter, "Application");
-			});
+            
+            oTable.bindRows({
+            	path: '/PedidoVendas',
+				sorter: {
+					path: 'Numero'
+				},
+				parameters: {
+					expand: 'ParceiroNegocioDetails'
+				},
+				filters: oFilter
+            });
 		},
 		
 		filtraPedido: function(oEvent){

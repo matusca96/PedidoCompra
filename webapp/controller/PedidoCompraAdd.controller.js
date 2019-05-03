@@ -125,7 +125,7 @@ sap.ui.define([
 		
 		totalPedido: function() {
 			var oPedidoItensModel = this.getView().getModel("itens");
-			var aItems = oItensModel.getData();
+			var aItems = oPedidoItensModel.getData();
 			var nTotal = 0;
 			
 			for( var i = 0; i < aItems.length; i++) {
